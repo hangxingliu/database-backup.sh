@@ -1,3 +1,9 @@
 libs/gdrive
 
 private-files
+
+# log files
+*.log
+
+# backup files
+*.bak
