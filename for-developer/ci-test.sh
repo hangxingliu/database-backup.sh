@@ -16,6 +16,12 @@ function print_system_release() {
 function main() {
 	echo "[.] testing ../libs/resolve.sh ...";
 	bash ../libs/resolve.sh || exit 1;
+
+	echo "[.] testing ../libs/gdrive ...";
+	../libs/gdrive help >/dev/null || exit 1;
+
+	echo "[.] testing jq ...";
+	jq --version || exit 1;
 }
 
 # =============================

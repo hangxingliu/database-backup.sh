@@ -117,8 +117,13 @@ if [[ -z `which jq` ]]; then
 
 	# ======================================================================================
 	print_doing "sudo $PKG_MAN $PKG_OPT jq";
-	sudo $PKG_MAN $PKG_OPT jq;
-	if [[ "$?" != "0" ]]; then print_fatal_exit_1 "install \"jq\" failed!"; fi
+	_CODE="1";
+	if [[ "$PKG_MAN" == "brew" ]]; then
+		$PKG_MAN $PKG_OPT jq; _CODE="$?";
+	else
+		sudo $PKG_MAN $PKG_OPT jq; _CODE="$?";
+	fi
+	if [[ "$_CODE" != "0" ]]; then print_fatal_exit_1 "install \"jq\" failed!"; fi
 	print_done "installed \"jq\"!";
 fi
 
