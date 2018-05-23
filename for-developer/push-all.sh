@@ -13,3 +13,6 @@ git remote | while read REMOTE; do
 done
 
 print_all_done "Pushed to all git remotes!";
+
+command popd > /dev/null;
+command popd > /dev/null;
