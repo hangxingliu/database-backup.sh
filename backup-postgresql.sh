@@ -129,7 +129,6 @@ fi
 #                              |_|
 print_doing "Executing $PG_DUMP ...";
 DUMP_OPTS="$DUMP_OPTS --encoding $DUMP_ENCODING --file $TMP_OUTPUT"
-exit 0;
 env PGPASSWORD="$DUMP_PASSWORD" \
 	$PG_DUMP $DUMP_OPTS ||
 	print_fatal_exit_1 "Execute \"$PG_DUMP $DUMP_OPTS\" failed!";
