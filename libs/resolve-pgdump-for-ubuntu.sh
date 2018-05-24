@@ -14,9 +14,11 @@ function getUbuntuVersionID() {
 		awk '/^VERSION_ID/ {print $2}';
 }
 function getUbuntuCodeName() {
-	cat /etc/os-release |
-		tr "=\"'" '   ' | # replace "'= to blank space
-		awk '/^VERSION_CODENAME/ {print $2}';
+	if [[ -f "/etc/lsb-release" ]]; then
+		cat /etc/lsb-release |
+			tr "=\"'" '   ' | # replace "'= to blank space
+			awk '/^DISTRIB_CODENAME/ {print $2}';
+	fi
 }
 
 function resolvePGDumpForUbuntu() {
@@ -44,10 +46,14 @@ function resolvePGDumpForUbuntu() {
 		print_warning "\"resolve-pgdump-for-ubuntu.sh\" should be only use on ubuntu!"
 		return;
 	fi
-	local OS_VER;
+	local OS_VER OS_CODENAME;
 	OS_VER=`getUbuntuVersionID`;
+	OS_CODENAME=`getUbuntuCodeName`;
 	if [[ "$OS_VER" != "14.04" ]] && [[ "$OS_VER" != "16.04" ]] && [[ "$OS_VER" != "18.04" ]]; then
 		print_fatal_exit_1 "Your Ubuntu version ($OS_VER) is not supported to install PostgreSQL via package mangement!"
+	fi
+	if [[ -z "$OS_CODENAME" ]]; then
+		print_fatal_exit_1 "Could not get OS code name! (/etc/lsb-release)"
 	fi
 
 	# ====================================================================================
@@ -76,7 +82,7 @@ function resolvePGDumpForUbuntu() {
 	# ====================================================================================
 	print_doing "Create a list file for PostgreSQL ...";
 	local CTX;
-	CTX="deb http://apt.postgresql.org/pub/repos/apt/ $(getUbuntuCodeName)-pgdg main";
+	CTX="deb http://apt.postgresql.org/pub/repos/apt/ ${OS_CODENAME}-pgdg main";
 	print_info "echo \"$CTX\" | sudo tee $EXPECTED_LIST_FILE";
 	echo "$CTX" | sudo tee $EXPECTED_LIST_FILE ||
 		print_fatal_exit_1 "Could not create list file for PostgreSQL!";
