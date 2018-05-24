@@ -48,7 +48,8 @@ function loadConfig() {
 }
 
 function _newConfig() {
-	jq ".oauth2_client_id = \"$OAUTH2_CLIENT_ID\"" "$CFG_FILE" |
+	echo "{}" |
+		jq ".oauth2_client_id = \"$OAUTH2_CLIENT_ID\"" |
 		jq ".oauth2_client_secret = \"$OAUTH2_CLIENT_SECRET\"" |
 		jq ".oauth2_refresh_token = \"$OAUTH2_REFRESH_TOKEN\"" |
 		jq ".google_driver_dir = \"$GOOGLE_DRIVE_DIR\"";
