@@ -15,6 +15,8 @@
 	- `chmod +x ./libs/gdrive`
 2. **jq** (Command-line JSON processor)
 	- Install `jq` via package management, for example: `apt install jq`, `brew install jq`, ...
+3. **cURL** (A command line tool and library for transferring data with URL syntax)
+	- Install `curl` via package management, for example: `apt install curl`, `brew install curl`, ...
 
 ---
 

@@ -93,7 +93,7 @@ Goto <https://console.cloud.google.com/apis> and login.
 
 0x02. 启用 Google Drive API
 
-![](../imgs/screenshots/enable-api-1.png)
+![](../imgs/screenshots/enable-api-1.png)   
 ![](../imgs/screenshots/enable-api-2.png)
 
 
@@ -101,9 +101,9 @@ Goto <https://console.cloud.google.com/apis> and login.
 
 0x03. 配置 OAuth2
 
-![](../imgs/screenshots/add-oauth2-1.png)
-![](../imgs/screenshots/add-oauth2-2.png)
-![](../imgs/screenshots/add-oauth2-3.png)
+![](../imgs/screenshots/add-oauth2-1.png)   
+![](../imgs/screenshots/add-oauth2-2.png)   
+![](../imgs/screenshots/add-oauth2-3.png)   
 ![](../imgs/screenshots/add-oauth2-4.png)
 
 
