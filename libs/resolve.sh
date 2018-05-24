@@ -2,8 +2,7 @@
 
 #
 # Resolve third-part libraries script
-#
-#
+#  (resolve dependencies)
 #
 
 GDRIVE_GITHUB="https://github.com/prasmussen/gdrive"
@@ -60,12 +59,51 @@ function get_gdrive_download_url() {
 	esac
 }
 
+function installViaPackageManagement() {
+	local PKG_MAN PKG_OPT NAME URL;
+	NAME="$1"; URL="$2";
+
+	print_doing "installing \"$NAME\" (Command-line JSON processor)";
+
+	PKG_MAN=""; PKG_OPT="install -y";
+	if [[ -n `which apt-get` ]]; then PKG_MAN="apt-get"; # Ubuntu/Debian
+	elif [[ -n `which dnf` ]]; then PKG_MAN="dnf"; # Fedora
+	elif [[ -n `which zypper` ]]; then PKG_MAN="zypper"; # openSUSE
+	elif [[ -n `which pacman` ]]; then PKG_MAN="pacman"; PKG_OPT="-Sy"; # Arch
+	elif [[ `uname -s` == "Darwin" ]]; then
+		if [[ -z `which brew` ]]; then
+			print_fatal_exit_1 "brew is missing! [Homebrew](https://brew.sh/)";
+		fi
+		PKG_MAN="brew"; PKG_OPT="install";
+	fi
+
+	if [[ -z "$PKG_MAN" ]]; then
+		print_fatal_exit_1 "could not found any package manager in this computer to install \"$NAME\"" \
+			"\n             please download $NAME manuualy from:" \
+			"\n\n             $URL\n"
+	fi
+
+	# ======================================================================================
+	print_doing "sudo $PKG_MAN $PKG_OPT $NAME";
+	_CODE="1";
+	if [[ "$PKG_MAN" == "brew" ]]; then
+		$PKG_MAN $PKG_OPT $NAME; _CODE="$?";
+	else
+		sudo $PKG_MAN $PKG_OPT $NAME; _CODE="$?";
+	fi
+	if [[ "$_CODE" != "0" ]]; then print_fatal_exit_1 "install \"$NAME\" failed!"; fi
+	print_done "installed \"$NAME\"!";
+}
 
 # checkout to directory same with this script
 command pushd `cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd` > /dev/null;
 
 # install color variables
 source ../src/style_print.sh
+
+
+[[ -z `which jq` ]] && installViaPackageManagement "jq" "https://stedolan.github.io/jq/download/";
+[[ -z `which curl` ]] && installViaPackageManagement "curl" "https://curl.haxx.se/download.html";
 
 if [[ ! -x "$GDRIVE_BIN" ]]; then
 	# ======================================================================================
@@ -84,7 +122,8 @@ if [[ ! -x "$GDRIVE_BIN" ]]; then
 
 	# ======================================================================================
 	print_doing "downloading $GDRIVE_URL";
-	wget "$GDRIVE_URL" -O "$GDRIVE_BIN" || print_fatal_exit_1 "download failed!";
+	curl --fail --output "$GDRIVE_BIN" "$GDRIVE_URL" ||
+		print_fatal_exit_1 "download failed!";
 	print_done "downloaded \"$GDRIVE_BIN\"";
 
 	# ======================================================================================
@@ -93,41 +132,6 @@ if [[ ! -x "$GDRIVE_BIN" ]]; then
 fi
 
 
-if [[ -z `which jq` ]]; then
-	# ======================================================================================
-	print_doing "installing \"jq\" (Command-line JSON processor)";
-
-	PKG_MAN=""; PKG_OPT="install -y";
-	if [[ -n `which apt-get` ]]; then PKG_MAN="apt-get"; # Ubuntu/Debian
-	elif [[ -n `which dnf` ]]; then PKG_MAN="dnf"; # Fedora
-	elif [[ -n `which zypper` ]]; then PKG_MAN="zypper"; # openSUSE
-	elif [[ -n `which pacman` ]]; then PKG_MAN="pacman"; PKG_OPT="-Sy"; # Arch
-	elif [[ `uname -s` == "Darwin" ]]; then
-		if [[ -z `which brew` ]]; then
-			print_fatal_exit_1 "brew is missing! [Homebrew](https://brew.sh/)";
-		fi
-		PKG_MAN="brew"; PKG_OPT="install";
-	fi
-
-	if [[ -z "$PKG_MAN" ]]; then
-		print_fatal_exit_1 "could not found any package manager in this computer to install \"jq\"" \
-			"\n             please download jq manuualy from:" \
-			"\n\n             https://stedolan.github.io/jq/download/\n"
-	fi
-
-	# ======================================================================================
-	print_doing "sudo $PKG_MAN $PKG_OPT jq";
-	_CODE="1";
-	if [[ "$PKG_MAN" == "brew" ]]; then
-		$PKG_MAN $PKG_OPT jq; _CODE="$?";
-	else
-		sudo $PKG_MAN $PKG_OPT jq; _CODE="$?";
-	fi
-	if [[ "$_CODE" != "0" ]]; then print_fatal_exit_1 "install \"jq\" failed!"; fi
-	print_done "installed \"jq\"!";
-fi
-
 print_all_done "resolved all thrid-party libraries";
-
 # restore directory path
 command popd > /dev/null;

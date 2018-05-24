@@ -23,7 +23,7 @@ OAUTH2_REFRESH_TOKEN="";
 GOOGLE_DRIVE_DIR="";
 
 function loadConfig() {
-	# if [[ ! -f "$CFG_FILE" ]]; then return; fi
+	if [[ ! -f "$CFG_FILE" ]]; then return; fi
 
 	print_doing "loading user config from \"$CFG_FILE\" ";
 
