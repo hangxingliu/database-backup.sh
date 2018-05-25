@@ -7,6 +7,7 @@ POSTGRESQL_OPTS="--host 127.0.0.1 --port 5432 --username test --password test --
 # ===============================================
 function throw() { echo -e "fatal: $1\nexit with code 1;"; exit 1; }
 
+export TZ=Asia/Shanghai;
 NOW="$(date "+%Y-%m-%d-%H-%M-%S")";
 LOG_FILE="$LOG_DIR/$NOW.log";
 APPEND_LOG="tee --append $LOG_FILE";
