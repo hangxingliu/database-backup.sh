@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 # checkout to directory same with this script
-command pushd `cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd` > /dev/null;
-command pushd .. > /dev/null;
+__DIRNAME=`cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd`;
+pushd "$__DIRNAME" > /dev/null;
+pushd .. > /dev/null;
 
 source ./src/style_print.sh
 
@@ -14,5 +15,5 @@ done
 
 print_all_done "Pushed to all git remotes!";
 
-command popd > /dev/null;
-command popd > /dev/null;
+popd > /dev/null;
+popd > /dev/null;

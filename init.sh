@@ -11,7 +11,8 @@
 
 
 # checkout to directory same with this script
-command pushd `cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd` > /dev/null;
+__DIRNAME=`cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd`;
+pushd "$__DIRNAME" > /dev/null;
 
 source ./src/style_print.sh;
 source ./src/user_config.sh;

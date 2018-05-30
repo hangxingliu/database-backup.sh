@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # checkout to directory same with this script
-command pushd `cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd` > /dev/null;
+__DIRNAME=`cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd`;
+pushd "$__DIRNAME" > /dev/null;
 
 # install color variables
 source ./style_print.sh
@@ -47,4 +48,4 @@ function getGoogleAccessToken() {
 	print_done "Got access token: $OAUTH2_ACCESS_TOKEN";
 }
 
-command popd > /dev/null;
+popd > /dev/null;

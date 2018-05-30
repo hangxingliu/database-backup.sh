@@ -8,7 +8,8 @@
 #  - oauth2_refresh_token
 
 # checkout to directory same with this script
-command pushd `cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd` > /dev/null;
+__DIRNAME=`cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd`;
+pushd "$__DIRNAME" > /dev/null;
 
 # install color variables
 source ./style_print.sh
@@ -65,4 +66,4 @@ function saveConfig() {
 	print_done "saved user config";
 }
 
-command popd > /dev/null;
+popd > /dev/null;

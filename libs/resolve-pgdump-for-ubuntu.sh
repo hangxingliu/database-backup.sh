@@ -3,7 +3,8 @@
 # use environment FORCE_RESOLVE_PGDUMP=yes to force executing resolve flow.
 
 # checkout to directory same with this script
-command pushd `cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd` > /dev/null;
+__DIRNAME=`cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd`;
+pushd "$__DIRNAME" > /dev/null;
 
 # install color variables
 source ../src/style_print.sh
@@ -102,4 +103,4 @@ function resolvePGDumpForUbuntu() {
 resolvePGDumpForUbuntu;
 
 # restore directory path
-command popd > /dev/null;
+popd > /dev/null;
