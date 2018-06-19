@@ -103,6 +103,11 @@ And modify it for yourself, then add rule into crontab
 0 0 * * * /path/to/backup-database.sh/crontab.sh
 ```
 
+## TODO
+
+- [ ] `./init.sh`: choose special directory
+- [ ] `backup-mysql.sh`
+
 ## Third-party libraries 
 
 - **gdrive** (Google Drive CLI Client)
