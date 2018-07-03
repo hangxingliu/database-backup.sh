@@ -32,7 +32,7 @@ function resolveMongoDumpForUbuntu() {
 	print_doing "Verifying System information ...";
 	local IS_UBUNTU  TMP_FILE  EXPECTED_KEY  EXPECTED_LIST_FILE   MONGODB_HTML_URL;
 	TMP_FILE="/tmp/install-mongodump.html"
-	EXPECTED_KEY="2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5";
+	EXPECTED_KEY="9DA31620334BD75D9DCB49F368818C72E52529D4";
 	EXPECTED_LIST_FILE="/etc/apt/sources.list.d/mongodb-org-3.6.list";
 	MONGODB_HTML_URL="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/";
 
