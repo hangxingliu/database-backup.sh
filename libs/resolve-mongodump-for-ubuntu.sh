@@ -33,7 +33,7 @@ function resolveMongoDumpForUbuntu() {
 	local IS_UBUNTU  TMP_FILE  EXPECTED_KEY  EXPECTED_LIST_FILE   MONGODB_HTML_URL;
 	TMP_FILE="/tmp/install-mongodump.html"
 	EXPECTED_KEY="9DA31620334BD75D9DCB49F368818C72E52529D4";
-	EXPECTED_LIST_FILE="/etc/apt/sources.list.d/mongodb-org-3.6.list";
+	EXPECTED_LIST_FILE="/etc/apt/sources.list.d/mongodb-org-4.0.list";
 	MONGODB_HTML_URL="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/";
 
 	if [[ ! -f "/etc/os-release" ]]; then
@@ -78,10 +78,10 @@ function resolveMongoDumpForUbuntu() {
 	# ====================================================================================
 	print_doing "Create a list file for MongoDB ...";
 	local CTX;
-	CTX="deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse";
+	CTX="deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse";
 	if [[ $OS_VER_COMPARE -lt 16004 ]]; then
 		# for 14.04
-		CTX="deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.6 multiverse";
+		CTX="deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/4.0 multiverse";
 	fi
 	print_info "echo \"$CTX\" | sudo tee $EXPECTED_LIST_FILE";
 	echo "$CTX" | sudo tee $EXPECTED_LIST_FILE ||
