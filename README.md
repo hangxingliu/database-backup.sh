@@ -106,7 +106,7 @@ And modify it for yourself, then add rule into crontab
 ## TODO
 
 - [ ] `./init.sh`: choose special directory
-- [ ] `backup-mysql.sh`
+- [ ] more documents about `backup-mysql.sh`
 
 ## Third-party libraries 
 
