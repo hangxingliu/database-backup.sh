@@ -23,7 +23,7 @@ function main() {
 	env FORCE_RESOLVE_PGDUMP=yes ../libs/resolve-pgdump-for-ubuntu.sh || exit 1;
 
 	echo "[.] testing ../libs/resolve-mysqldump-for-ubuntu.sh ...";
-	env FORCE_RESOLVE_MYSQLDUMP=yes ../libs/resolve-mysqldump-for-ubuntu.sh || exit 1;
+	env FORCE_RESOLVE_MYSQLDUMP=yes PERFECT_MYSQLDUMP_CLIENT=mariadb-client ../libs/resolve-mysqldump-for-ubuntu.sh || exit 1;
 
 	echo "[.] testing ../libs/resolve.sh ...";
 	bash ../libs/resolve.sh || exit 1;

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# use environment FORCE_RESOLVE_MYSQLDUMP=yes to force executing resolve flow.
+# use environment variable FORCE_RESOLVE_MYSQLDUMP=yes to force executing resolve flow.
+# use environment variable PERFECT_MYSQLDUMP_CLIENT=mariadb-client to force choose apt package for mysqldump
 
 APT_PACKAGE_NAME_MYSQL="mysql-client";
 APT_PACKAGE_NAME_MARIADB="mariadb-client";
@@ -48,16 +49,21 @@ function resolveMySQLDumpForUbuntu() {
 	fi
 
 	# ====================================================================================
-	print_doing "Choose the client you want to install:"
-	local CLIENT_ID APT_PACKAGE;
-	print_info "[1] $APT_PACKAGE_NAME_MYSQL (by default)";
-	print_info "[2] $APT_PACKAGE_NAME_MARIADB";
-	read -p "input the client id you want to install (1/2) > " CLIENT_ID;
-	[[ -z "$CLIENT_ID" ]] && CLIENT_ID=1;
+	if [[ -n "$PERFECT_MYSQLDUMP_CLIENT" ]]; then
+		print_info "use package name \"$PERFECT_MYSQLDUMP_CLIENT\" from environment variable: \$PERFECT_MYSQLDUMP_CLIENT";
+		APT_PACKAGE="$PERFECT_MYSQLDUMP_CLIENT";
+	else
+		print_doing "Choose the client you want to install:"
+		local CLIENT_ID APT_PACKAGE;
+		print_info "[1] $APT_PACKAGE_NAME_MYSQL (by default)";
+		print_info "[2] $APT_PACKAGE_NAME_MARIADB";
+		read -p "input the client id you want to install (1/2) > " CLIENT_ID;
+		[[ -z "$CLIENT_ID" ]] && CLIENT_ID=1;
 
-	if [[ "$CLIENT_ID" == 1 ]]; then    APT_PACKAGE="$APT_PACKAGE_NAME_MYSQL";
-	elif [[ "$CLIENT_ID" == 2 ]]; then  APT_PACKAGE="$APT_PACKAGE_NAME_MARIADB";
-	else print_fatal_exit_1 "invalid client id: \"$CLIENT_ID\" "; fi
+		if [[ "$CLIENT_ID" == 1 ]]; then    APT_PACKAGE="$APT_PACKAGE_NAME_MYSQL";
+		elif [[ "$CLIENT_ID" == 2 ]]; then  APT_PACKAGE="$APT_PACKAGE_NAME_MARIADB";
+		else print_fatal_exit_1 "invalid client id: \"$CLIENT_ID\" "; fi
+	fi
 
 	# ====================================================================================
 	print_doing "Checking sudo ...";
