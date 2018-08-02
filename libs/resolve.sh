@@ -123,7 +123,8 @@ if [[ ! -x "$GDRIVE_BIN" ]]; then
 
 	# ======================================================================================
 	print_doing "downloading $GDRIVE_URL";
-	curl --fail --output "$GDRIVE_BIN" "$GDRIVE_URL" ||
+	# --location: follow Google Drive redirect
+	curl --fail --location --output "$GDRIVE_BIN" "$GDRIVE_URL" ||
 		print_fatal_exit_1 "download failed!";
 	print_done "downloaded \"$GDRIVE_BIN\"";
 

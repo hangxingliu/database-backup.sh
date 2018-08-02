@@ -106,6 +106,8 @@ And modify it for yourself, then add rule into crontab
 ## TODO
 
 - [ ] `./init.sh`: choose special directory
+- [ ] `./init.sh`: add error reason display (display temporary response file under `/tmp`)
+	- For example: `Failed to list files: googleapi: Error 403: Access Not Configured. Drive API has not been used in project ...`
 - [ ] more documents about `backup-mysql.sh`
 
 ## Third-party libraries 
