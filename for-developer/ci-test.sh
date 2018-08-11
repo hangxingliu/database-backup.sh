@@ -29,10 +29,10 @@ function main() {
 	bash ../libs/resolve.sh || exit 1;
 
 	echo "[.] testing ../libs/gdrive ...";
-	../libs/gdrive help > /dev/null || exit 1;
-	# (FIXED) Because sometimes invalid gdrive binary file will be download on travis-ci
-	# (FIXED) ../libs/gdrive help > /dev/null || echo "gdrive is invalid!"; # exit 1;
-
+	# gdrive binary file on travis-ci osx environment will throw an exception from binary program inside
+	if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
+		../libs/gdrive help > /dev/null || echo "gdrive is invalid!"; # exit 1;
+	fi
 
 	echo "[.] testing jq ...";
 	jq --version || exit 1;
